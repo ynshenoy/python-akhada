@@ -1,125 +1,125 @@
 ..
-  This work is licensed under a Creative Commons Attribution 3.0 Unported
-  License.
+ This work is licensed under a Creative Commons Attribution 3.0 Unported
+ License.
+ 
+ http://creativecommons.org/licenses/by/3.0/legalcode
+ 
+=======================
+MagnetoDB Notifications
+=======================
 
-  http://creativecommons.org/licenses/by/3.0/legalcode
+https://blueprints.launchpad.net/magnetodb/+spec/magnetodb-notifications
 
-  =======================
-  MagnetoDB Notifications
-  =======================
+Notifications in MagnetoDB are already implemented. For example, when a
+table is created a notification called table.create.start is emmited and 
+when the table creation is finished a notification called table.create.end
+is emmited. 
 
-  https://blueprints.launchpad.net/magnetodb/+spec/magnetodb-notifications
+Problem description
+===================
 
-  Notifications in MagnetoDB are already implemented. For example, when a
-  table is created a notification called table.create.start is emmited and 
-  when the table creation is finished a notification called table.create.end
-  is emmited. 
+The notifications sent by MagnetoDB needs to be fetched from message bus
+and then transformed into samples and then stored in the database. To
+achieve this a notification handler is needed.
 
-  Problem description
-  ===================
+Proposed change
+===============
 
-  The notifications sent by MagnetoDB needs to be fetched from message bus
-  and then transformed into samples and then stored in the database. To
-  achieve this a notification handler is needed.
+A new notification plugin for MagnetoDB to transform the notifications
+into samples using existing ``NotificationBase`` implementation as a model.
 
-  Proposed change
-  ===============
+Alternatives
+------------
 
-  A new notification plugin for MagnetoDB to transform the notifications
-  into samples using existing ``NotificationBase`` implementation as a model.
+Handling notifications is the preferred way for gathering data in ceilometer.
 
-  Alternatives
-  ------------
+Data model impact
+-----------------
+None.
 
-  Handling notifications is the preferred way for gathering data in ceilometer.
+REST API impact
+---------------
+There will be additional valid values in the query parameters but no changes
+to API endpoints.
 
-  Data model impact
-  -----------------
-  None.
+Security impact
+---------------
 
-  REST API impact
-  ---------------
-  There will be additional valid values in the query parameters but no changes
-  to API endpoints.
+None.
 
-  Security impact
-  ---------------
+Pipeline impact
+---------------
 
-  None.
+None.
 
-  Pipeline impact
-  ---------------
+Othe end user impact
+--------------------
 
-  None.
+None.
 
-  Othe end user impact
-  --------------------
+Performance/Scalability impacts
+-------------------------------
 
-  None.
+No new impacts. As MagnetoDB is a highly available nosql datastore, there are
+a lot of notifications going to be generated.
 
-  Performance/Scalability impacts
-  -------------------------------
+Other deployer impact
+---------------------
 
-  No new impacts. As MagnetoDB is a highly available nosql datastore, there are
-  a lot of notifications going to be generated.
+None.
 
-  Other deployer impact
-  ---------------------
+Developer impact
+----------------
 
-  None.
+None.
 
-  Developer impact
-  ----------------
+Implementation
+==============
 
-  None.
+Assignee(s)
+-----------
+Primary assignee:
+  ajayaa
 
-  Implementation
-  ==============
+Other contributors:
 
-  Assignee(s)
-  -----------
-  Primary assignee:
-    ajayaa
+Work Items
+----------
 
-  Other contributors:
+* Establish expected data.
 
-  Work Items
-  ----------
+* Create tests of transformation of notifications to samples.
 
-  * Establish expected data.
+* Create notification plugin to consume notifications.
 
-  * Create tests of transformation of notifications to samples.
+* Create tests of notifications across fake bus.
 
-  * Create notification plugin to consume notifications.
+* Create sample query tests.
 
-  * Create tests of notifications across fake bus.
+Future lifecycle
+================
 
-  * Create sample query tests.
+In the future new types of notifications are expected from the MagnetoDB.
+These will need to be handled either by additional notification
+plugins or (hopefully) generic notification handling. The Ceilometer team
+will
+be responsible for collaborating with the MagnetoDB team to ensure these are
+handled smoothly.
 
-  Future lifecycle
-  ================
+Dependencies
+============
 
-  In the future new types of notifications are expected from the MagnetoDB.
-  These will need to be handled either by additional notification
-  plugins or (hopefully) generic notification handling. The Ceilometer team
-  will
-  be responsible for collaborating with the MagnetoDB team to ensure these are
-  handled smoothly.
+None.
 
-  Dependencies
-  ============
+Testing
+=======
 
-  None.
+Unittests.
 
-  Testing
-  =======
+Documentation Impact
+====================
 
-  Unittests.
+The added metrics will need to be documented in the `measurements section`_.
 
-  Documentation Impact
-  ====================
-
-  The added metrics will need to be documented in the `measurements section`_.
-
-  .. _measurements section:
-     http://docs.openstack.org/developer/ceilometer/measurements.html
+.. _measurements section:
+   http://docs.openstack.org/developer/ceilometer/measurements.html
