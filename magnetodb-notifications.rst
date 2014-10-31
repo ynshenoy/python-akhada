@@ -28,12 +28,23 @@ Proposed change
 A new notification plugin for MagnetoDB to transform the notifications
 into samples using existing ``NotificationBase`` implementation as a model.
 
-Example of a notification and corresponding sample:
-https://gist.github.com/ajayaa/3e4617a832afd9f229c6
+`Example of a notification and corresponding sample`_
 
-List of new of samples:
-* Table
-* Index.size
+List of new samples:
+
+* :Resource ID: id
+  :Name: table
+  :Type: gauge
+  :Volume: 1
+  :Unit: table
+  :Timestamp: time
+
+* :Resource ID: id
+  :Name: index.size
+  :Type: gauge
+  :Volume: 2
+  :Unit: index
+  :Timestamp: time
 
 Alternatives
 ------------
@@ -132,3 +143,6 @@ The added metrics will need to be documented in the `measurements section`_.
 
 .. _measurements section:
    http://docs.openstack.org/developer/ceilometer/measurements.html
+
+.. _Example of a notification and corresponding sample:
+   https://gist.github.com/ajayaa/3e4617a832afd9f229c6
