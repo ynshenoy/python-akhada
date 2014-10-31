@@ -1,19 +1,19 @@
 ..
  This work is licensed under a Creative Commons Attribution 3.0 Unported
  License.
- 
+
  http://creativecommons.org/licenses/by/3.0/legalcode
- 
+
 =======================
 MagnetoDB Notifications
 =======================
 
-https://blueprints.launchpad.net/magnetodb/+spec/magnetodb-notifications
+https://blueprints.launchpad.net/ceilometer/+spec/support-magnetodb
 
-Notifications in MagnetoDB are already implemented. For example, when a
-table is created a notification called table.create.start is emmited and 
-when the table creation is finished a notification called table.create.end
-is emmited. 
+This spec proposes to add MagnetoDB metering to ceilometer by catching
+notifications emitted by MagnetoDB. For example, when a table is created a
+notification called table.create.start is emitted and when the table creation
+is finished a notification called table.create.end is emitted.
 
 Problem description
 ===================
@@ -28,6 +28,13 @@ Proposed change
 A new notification plugin for MagnetoDB to transform the notifications
 into samples using existing ``NotificationBase`` implementation as a model.
 
+Example of a notification and corresponding sample:
+https://gist.github.com/ajayaa/3e4617a832afd9f229c6
+
+List of new of samples:
+* Table
+* Index.size
+
 Alternatives
 ------------
 
@@ -35,10 +42,12 @@ Handling notifications is the preferred way for gathering data in ceilometer.
 
 Data model impact
 -----------------
+
 None.
 
 REST API impact
 ---------------
+
 There will be additional valid values in the query parameters but no changes
 to API endpoints.
 
@@ -60,8 +69,8 @@ None.
 Performance/Scalability impacts
 -------------------------------
 
-No new impacts. As MagnetoDB is a highly available nosql datastore, there are
-a lot of notifications going to be generated.
+No new impacts. As we are only storing table creation and deletion
+notification, the impact would be negligible.
 
 Other deployer impact
 ---------------------
@@ -82,6 +91,7 @@ Primary assignee:
   ajayaa
 
 Other contributors:
+  None.
 
 Work Items
 ----------
@@ -99,12 +109,11 @@ Work Items
 Future lifecycle
 ================
 
-In the future new types of notifications are expected from the MagnetoDB.
+In future new types of notifications are expected from the MagnetoDB.
 These will need to be handled either by additional notification
-plugins or (hopefully) generic notification handling. The Ceilometer team
-will
-be responsible for collaborating with the MagnetoDB team to ensure these are
-handled smoothly.
+plugins or (hopefully) generic notification handling. The MagnetoDB team
+will be responsible for collaborating with the ceilometer team to ensure these
+are handled smoothly.
 
 Dependencies
 ============
