@@ -81,9 +81,9 @@ Primary assignee:
   <ajayaa>
 
 Other contributors:
-  <rushiagr>
-  <yogeshwars>
-  <vivekd>
+*  <rushiagr>
+*  <yogeshwars>
+*  <vivekd>
 
 Work Items
 ----------
