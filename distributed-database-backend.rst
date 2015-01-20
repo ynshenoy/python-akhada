@@ -4,33 +4,30 @@
 
  http://creativecommons.org/licenses/by/3.0/legalcode
 
-==========================================
+======================
 Distributed DB Backend
-==========================================
+======================
 
 `bp distributed-db-backend <https://blueprints.launchpad.net/keystone/+spec/distributed-database-backend>`_
 
-New driver for keystone backends which uses a NOSQL backend, thereby providing
-high availability and ability to handle network partitions. 
+We propose the addition of an optional driver for keystone backends, one that is based on a NoSQL database.
 
 Problem Description
 ===================
 
-Most of the operators use MYSQL as a backend for keystone which makes MYSQL
-node essential to keystone availability and creates a single point of failure.
+Currently MySQL, the default backend for keystone, is a single point of failure in the system which impacts availability of the keystone service. 
 
 Proposed Change
 ===============
 
-Add a new driver which uses a NOSQL backend. The backend is going to be 
-MagnetoDB which provides a DynamoDB like api on top of Cassandra.
+We propose to add a new driver which uses a NoSQL backend. The backend is MagnetoDB, which provides a DynamoDB API, and is implemented on top of Cassandra.
 
 Alternatives
 ------------
 
 Use Cassandra directly instead of using MagnetoDB as a backend. The advantage
 MagnetoDB provides is it has a pluggable backend. So it gives an opportunity
-to use different NOSQL backends like HBase, Riak with the same apis.
+to use different NoSQL backends like HBase, Riak with the same apis.
 
 Security Impact
 ---------------
@@ -55,8 +52,8 @@ None.
 Other Deployer Impact
 ---------------------
 
-This is going to be just another driver. Deployers are free not to use it and
-use default MYSQL driver. But if it is used then MagnetoDB service has to
+This is going to be another driver. Deployers are free not to use it and
+use default MySQL driver. But if it is used then MagnetoDB service has to
 be deployed to make this driver work. MagnetoDB in turn uses Cassandra to
 store data. So Cassandra has to be deployed as well. Proposed configuration 
 changes are as follows:
@@ -98,7 +95,6 @@ Schema design and code for following backends:
 * Trust
 * Policy
 * Assignment
-* Token
 
 Dependencies
 ============
